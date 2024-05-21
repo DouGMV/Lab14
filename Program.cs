@@ -1,3 +1,4 @@
+using Blazored.LocalStorage;
 using Lab14;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -7,7 +8,5 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-builder.Services.AddScoped<Biblioteca>();
-
-
+builder.Services.AddBlazoredLocalStorage();
 await builder.Build().RunAsync();

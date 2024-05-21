@@ -1,0 +1,80 @@
+﻿@page "/Album-editar/{ArtistaAlbum}"
+@inject HttpClient Http
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject NavigationManager NavigationManager
+
+<h3>Album</h3>
+
+<EditForm Model="@album" OnValidSubmit="@Guardar">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label for="NombreCancion">Nombre de la cancion</label>
+        <InputText id="NombreCancion" @bind-Value="album.NombreCancion" class="form-control" />
+        <ValidationMessage For="() => album.NombreCancion" />
+    </div>
+    <div class="form-group">
+        <label for="ArtistaCancion">Artista de la cancion</label>
+        <InputText id="ArtistaCancion" @bind-Value="album.ArtistaCancion" class="form-control" />
+        <ValidationMessage For="() => album.ArtistaCancion" />
+    </div>
+    <div class="form-group">
+        <label for="Duracion">Duracion de la cancion</label>
+        <InputText id="Duracion" @bind-Value="album.Duracion" class="form-control" />
+        <ValidationMessage For="() => album.ArtistaCancion" />
+    </div>
+    <div class="form-group">
+        <label for="TituloAlbum">Titulo del album</label>
+        <InputText id="TituloAlbum" @bind-Value="album.TituloAlbum" class="form-control" />
+        <ValidationMessage For="() => album.TituloAlbum" />
+    </div>
+    <div class="form-group">
+        <label for="ArtistaAlbum">Artista del album</label>
+        <InputText id="ArtistaAlbum" @bind-Value="album.ArtistaAlbum" class="form-control" />
+        <ValidationMessage For="() => album.ArtistaAlbum" />
+    </div>
+    <div class="form-group">
+        <label for="Canciones">Canciones del album</label>
+        <InputText id="Canciones" @bind-Value="album.Canciones" class="form-control" />
+        <ValidationMessage For="() => album.Canciones" />
+    </div>
+    <div class="form-group">
+        <label for="FechaPublicacion">Fecha de publicacion del album</label>
+        <InputText id="FechaPublicacion" @bind-Value="album.FechaPublicacion" class="form-control" />
+        <ValidationMessage For="() => album.FechaPublicacion" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    </div>
+</EditForm>
+
+@code {
+
+    [Parameter]
+    public string ArtistaAlbum { get; set; }
+
+    private Album album = new Album();
+    List<Album> albumes = new List<Album>();
+
+
+    protected async Task Guardar()
+    {
+        await localStorage.SetItemAsync("albumes", albumes);
+
+        //Al finalizar de guardar regresamos al formulario original
+        NavigationManager.NavigateTo("/album-crear");
+
+    }
+
+    protected override async Task OnInitializedAsync()
+    {   //Cargar todos los albumes guardados
+        albumes = await localStorage.GetItemAsync<List<Album>>("albumes");
+
+        if (album == null)
+            albumes = new List<Album>();
+
+        album = albumes.Find(c => c.ArtistaAlbum == ArtistaAlbum);
+    }
+}
+

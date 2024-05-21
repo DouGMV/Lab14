@@ -9,12 +9,14 @@ namespace Lab14
 
         [Required(ErrorMessage = "El Artista de la cancion es Requerido")]
         public string ArtistaCancion { get; set; }
-        public TimeSpan Duracion { get; set; }
+        [Required(ErrorMessage = "La duración de la cancion es Requerido")]
+        public string Duracion { get; set; }
 
         public Cancion()
         {
             NombreCancion = string.Empty;
             ArtistaCancion = string.Empty;
+            Duracion = string.Empty;
         }
     }
 }

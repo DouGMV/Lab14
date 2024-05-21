@@ -9,14 +9,15 @@ namespace Lab14
 
         [Required(ErrorMessage = "El Artista del album es Requerido")]
         public string ArtistaAlbum { get; set; }
-        public List<Cancion> Canciones { get; set; }
-        public DateTime FechaPublicacion { get; set; }
+        public string Canciones { get; set; }
+        public string FechaPublicacion { get; set; }
 
         public Album()
         {
             TituloAlbum = string.Empty;
             ArtistaAlbum = string.Empty;
-            Canciones = new List<Cancion>();
+            Canciones = string.Empty;
+            FechaPublicacion = string.Empty;
         }
     }
 }
